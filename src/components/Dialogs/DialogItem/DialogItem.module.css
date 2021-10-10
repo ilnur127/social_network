@@ -1,0 +1,17 @@
+.dialog {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.dialog a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.dialog a.active {
+  color: gold;
+}
+
+.dialogImg {
+  width: 50px;
+}

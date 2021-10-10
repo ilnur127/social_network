@@ -1,0 +1,19 @@
+.message {
+    display: flex;
+    align-items: center;
+}
+
+.meMessage {
+    justify-content: end;
+}
+
+.messageImg {
+    width: 50px;
+}
+
+.messageText {
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    margin-left: 15px;
+}

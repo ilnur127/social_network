@@ -1,0 +1,13 @@
+.postsBlock {
+    padding: 10px;
+}
+
+.newPostBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.newPostBlock button {
+    margin-top: 10px;
+}
