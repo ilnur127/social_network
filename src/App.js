@@ -14,8 +14,8 @@ function App(props) {
         <Header />
         <NavBar friends={props.state.sitebar.friends}/>
         <div className='app-wrapper--content'>
-          <Route path='/profile' render={() => <Profile posts={props.state.profilePage.posts} newPostText={props.state.profilePage.newPostText} addPost={props.store.addPost.bind(props.store)} updateNewPostText={props.store.updateNewPostText.bind(props.store)}/>} />
-          <Route path='/dialogs' render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs} newMessageText={props.state.dialogsPage.newMessageText} messages={props.state.dialogsPage.messages} addMessage={props.store.addMessage.bind(props.store)} updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}/>} />
+          <Route path='/profile' render={() => <Profile posts={props.state.profilePage.posts} dispatch={props.store.dispatch.bind(props.store)}/>} />
+          <Route path='/dialogs' render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs} dispatch={props.store.dispatch.bind(props.store)} messages={props.state.dialogsPage.messages}/>} />
           <Route path='/news' render={() => <News />} />
           <Route path='/music' render={() => <Music />} />
           <Route path='/settings' render={() => <Settings />} />

@@ -2,13 +2,17 @@ import React from 'react';
 import classes from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/dialogsReduser'
 
 const Dialogs = (props) => {
     const newMessage = React.createRef()
 
     const onMessageChange = () => {
         const text = newMessage.current.value
-        props.updateNewMessageText(text)
+        props.dispatch(updateNewMessageTextActionCreator(text))
+    }
+    const addMessage = () => {
+        props.dispatch(addMessageActionCreator())
     }
 
     return <div className={classes.dialogs}>
@@ -24,7 +28,7 @@ const Dialogs = (props) => {
                     onChange={onMessageChange}
                 />
                 <button
-                    onClick={ props.addMessage }
+                    onClick={ addMessage }
                 >Send</button>
             </div>
         </div>

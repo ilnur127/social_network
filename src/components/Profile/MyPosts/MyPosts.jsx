@@ -1,11 +1,16 @@
 import React from 'react';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post'
+import { updateNewPostTextActionCreator, addPostActionCreator } from '../../../redux/profileReducer'
+
 const MyPosts = (props) => {
     const newPostElement = React.createRef()
     const onPostChange = () => {
         const text = newPostElement.current.value
-        props.updateNewPostText(text)
+        props.dispatch(updateNewPostTextActionCreator(text))
+    }
+    const addPost = () => {
+        props.dispatch(addPostActionCreator())
     }
     return <div className={classes.postsBlock}>
             <h3>My posts</h3>
@@ -16,7 +21,7 @@ const MyPosts = (props) => {
                     onChange={onPostChange}
                 />
                 <button
-                    onClick={ props.addPost }
+                    onClick={ addPost }
                 >App post</button>
             </div>
             <div className="posts">

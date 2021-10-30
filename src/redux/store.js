@@ -1,3 +1,6 @@
+import dialogsReducer from './dialogsReduser'
+import profileReducer from './profileReducer'
+import siteBarReducer from './siteBarReduser'
 const store = {
     _state: {
         dialogsPage: {
@@ -78,43 +81,20 @@ const store = {
             ]
         }
     },
-    getState() {
-        return this._state
-    },
     _rerenderEntireTree() {
         console.log('State changed')
     },
-    addPost() {
-        this._state.profilePage.posts.push({
-            id: this._state.profilePage.posts + 1,
-            text: this._state.profilePage.newPostText,
-            likes: 0
-        })
-        this._state.profilePage.newPostText = ''
-        this._rerenderEntireTree( )
-    },
-    updateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText
-    
-        this._rerenderEntireTree()
-    },
-    addMessage() {
-        this._state.dialogsPage.messages.push({
-            id: this._state.dialogsPage.messages + 1,
-            text: this._state.dialogsPage.newMessageText,
-            meMessage: true
-        })
-        this._state.dialogsPage.newMessageText = ''
-        this._rerenderEntireTree()
-    },
-    updateNewMessageText(newText) {
-        this._state.dialogsPage.newMessageText = newText
-    
-        this._rerenderEntireTree()
+    getState() {
+        return this._state
     },
     subscribe(observer) {
-        this.rerenderEntireTree = observer
+        this._rerenderEntireTree = observer
+    },
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sitebar = siteBarReducer(this._state.sitebar, action)
+        this._rerenderEntireTree()
     }
 }
-
 export default store
