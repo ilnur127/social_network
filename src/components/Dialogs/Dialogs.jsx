@@ -2,17 +2,16 @@ import React from 'react';
 import classes from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
-import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/dialogsReduser'
 
 const Dialogs = (props) => {
     const newMessage = React.createRef()
-
+debugger
     const onMessageChange = () => {
         const text = newMessage.current.value
-        props.dispatch(updateNewMessageTextActionCreator(text))
+        props.onMessageChange(text)
     }
     const addMessage = () => {
-        props.dispatch(addMessageActionCreator())
+        props.addMessage()
     }
 
     return <div className={classes.dialogs}>
