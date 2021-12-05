@@ -56,21 +56,24 @@ export const updateNewMessageTextActionCreator = (newText) => ({
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_MESSAGE:
-            state.messages.push({
+        case ADD_MESSAGE: {
+            const newState = {...state, 
+                messages : [...state.messages], 
+                newMessageText : ''
+            }
+            newState.messages.push({
                 id: state.messages + 1,
                 text: state.newMessageText,
                 meMessage: true
             })
-            state.newMessageText = ''
-            break;
-        case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.newText
-            break;
-        default:
-            console.log("Нет таких action");
-            break;
+            return newState
+        }
+        case UPDATE_NEW_MESSAGE_TEXT: {
+            return {...state, newMessageText : action.newText}
+        }
+        default : {
+            return state
+        }
     }
-    return state
 }
 export default dialogsReducer

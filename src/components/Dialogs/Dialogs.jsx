@@ -5,7 +5,6 @@ import Message from './Message/Message'
 
 const Dialogs = (props) => {
     const newMessage = React.createRef()
-debugger
     const onMessageChange = () => {
         const text = newMessage.current.value
         props.onMessageChange(text)
@@ -16,14 +15,14 @@ debugger
 
     return <div className={classes.dialogs}>
         <div className={classes.dialogsItems}>
-            {props.dialogs.map((dialog) => (<DialogItem key={dialog.id} userId={dialog.id} userName={dialog.name} />))}
+            {props.dialogsPage.dialogs.map((dialog) => (<DialogItem key={dialog.id} userId={dialog.id} userName={dialog.name} />))}
         </div>
         <div className={classes.messages}>
-            {props.messages.map((message) => (<Message key={message.id} message={message} />))}
+            {props.dialogsPage.messages.map((message) => (<Message key={message.id} message={message} />))}
             <div>
                 <textarea
                     ref={newMessage}
-                    value={props.newMessageText}
+                    value={props.dialogsPage.newMessageText}
                     onChange={onMessageChange}
                 />
                 <button
