@@ -1,0 +1,17 @@
+.userContent {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+}
+.userContent:not(:last-child) {
+    margin-bottom: 20px;
+}
+.userInfo {
+    display: grid;
+    grid-template-columns: 3fr 5fr;
+}
+.userHeader {
+    text-align: center;
+}
+.userAvatar img {
+    border-radius: 50%;
+}
