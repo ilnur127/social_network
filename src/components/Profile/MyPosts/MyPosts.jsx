@@ -16,7 +16,7 @@ const MyPosts = (props) => {
             <div className={classes.newPostBlock}>
                 <textarea
                     ref={newPostElement}
-                    value={props.profilePage.newPostText}
+                    value={props.newPostText}
                     onChange={onPostChange}
                 />
                 <button
@@ -24,7 +24,7 @@ const MyPosts = (props) => {
                 >App post</button>
             </div>
             <div className="posts">
-                {props.profilePage.posts.map((post) => (<Post key={post.id} messageId={post.id} messageText={post.text} likes={post.likes} />))}
+                {props.posts.map((post) => (<Post key={post.id} messageId={post.id} messageText={post.text} likes={post.likes} />))}
             </div>
         </div>
 }

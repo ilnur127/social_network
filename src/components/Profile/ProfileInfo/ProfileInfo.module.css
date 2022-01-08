@@ -1,7 +1,32 @@
+.info,
+.contact {
+    display: flex;
+}
+.info img,
+.contact>div:first-child {
+    margin-right: 10px;
+}
+.mainInfo>div:first-child {
+    font-weight: bold;
+}
+.findJobBlock {
+    font-size: 12px;
+}
+.findJobBlock>div:first-child {
+    text-decoration: underline;
+}
+.findJobBlock>div:last-child {
+    font-style: oblique;
+}
 .img {
     width: 600px;
 }
 
 .decriptionBlock {
     padding: 10px;
+}
+.contacts>div:first-child,
+.description>div:first-child {
+    margin: 10px 5px;
+    font-weight: bold;
 }

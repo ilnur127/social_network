@@ -1,6 +1,6 @@
 import './App.css'
-import Header from './components/Header/Header'
-import Profile from './components/Profile/Profile';
+import HeaderContainer from './components/Header/HeaderContainer'
+import ProfileContainer from './components/Profile/ProfileContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import News from './components/News/News';
 import Music from './components/MusicComponents/Music';
@@ -12,10 +12,10 @@ function App(props) {
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
-        <Header />
+        <HeaderContainer />
         <SitebarContainer />
         <div className='app-wrapper--content'>
-          <Route path='/profile' render={() => <Profile/>} />
+          <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
           <Route path='/dialogs' render={() => <DialogsContainer/>} />
           <Route path='/news' render={() => <News />} />
           <Route path='/music' render={() => <Music />} />

@@ -1,22 +1,77 @@
+import { UsersApi } from "../api/api"
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SETUSERS = 'SETUSERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 const initialState = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: false,
+    followingInProgress: []
 }
-export const followAC = (userId) => ({
+const followAC = (userId) => ({
     type : FOLLOW,
     userId
 })
-export const unfollowAC = (userId) => ({
+const unfollowAC = (userId) => ({
     type: UNFOLLOW,
     userId
 })
-export const setUsersAC = (users) => ({
+const setUsersAC = (users) => ({
     type: SETUSERS,
     users
 })
+const setCurrentPageAC = (currentPage) => ({
+    type: SET_CURRENT_PAGE,
+    currentPage
+})
+const setUsersTotalCountAC = (totalUsersCount) => ({
+    type: SET_TOTAL_USERS_COUNT,
+    totalUsersCount
+})
+const toggleIsFetchingAC = (isFetching) => ({
+    type: TOGGLE_IS_FETCHING,
+    isFetching
+})
+const toggleFollowingProgressAC = (followingInProgress) => ({
+    type: TOGGLE_IS_FOLLOWING_PROGRESS,
+    isFetching: followingInProgress.isFetching,
+    userId: followingInProgress.userId
+})
+
+export const getUsersThunkCreator = (page, pageSize, changePage) => async (dispatch) => {
+    dispatch(toggleIsFetchingAC(true))
+    if (changePage) {
+        dispatch(setCurrentPageAC(page))
+    }
+    const data = await UsersApi.apiGetUsers(page, pageSize)
+    dispatch(setUsersTotalCountAC(data.totalCount))
+    dispatch(setUsersAC([...data.items]))
+    dispatch(toggleIsFetchingAC(false))
+}
+export const onFolowThunkCreator = (id) => async (dispatch) => {
+    dispatch(toggleFollowingProgressAC({isFetching: true, userId: id}))
+    const data = await UsersApi.apiOnFollow(id)
+    if (data.resultCode === 0) {
+        dispatch(followAC(id))
+    }
+    dispatch(toggleFollowingProgressAC({isFetching: false, userId: id}))
+}
+export const onUnfolowThunkCreator = (id) => async (dispatch) => {
+    dispatch(toggleFollowingProgressAC({isFetching: true, userId: id}))
+    const data = await UsersApi.apiOnUnollow(id)
+    if (data.resultCode === 0) {
+        dispatch(unfollowAC(id))
+    }
+    dispatch(toggleFollowingProgressAC({isFetching: false, userId: id}))
+}
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -45,7 +100,33 @@ const usersReducer = (state = initialState, action) => {
         case SETUSERS: {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: [...action.users]
+            }
+        }
+        case SET_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
+        case SET_TOTAL_USERS_COUNT: {
+            return {
+                ...state,
+                totalUsersCount: action.totalUsersCount
+            }
+        }
+        case TOGGLE_IS_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+        }
+        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
             }
         }
         default : {

@@ -1,0 +1,14 @@
+.paggination {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: wrap;
+    margin: 0px 10px;
+}
+.pagginationItem {
+    padding: 5px;
+    cursor: pointer;
+}
+.activePagginationItem {
+    background-color: gray;
+    font-weight: bold;
+}

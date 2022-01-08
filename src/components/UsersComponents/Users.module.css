@@ -1,6 +1,8 @@
 .userContent {
     display: grid;
     grid-template-columns: 1fr 9fr;
+    color: black;
+    text-decoration: none;
 }
 .userContent:not(:last-child) {
     margin-bottom: 20px;
