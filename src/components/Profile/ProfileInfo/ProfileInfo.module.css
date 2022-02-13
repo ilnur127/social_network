@@ -21,10 +21,6 @@
 .img {
     width: 600px;
 }
-
-.decriptionBlock {
-    padding: 10px;
-}
 .contacts>div:first-child,
 .description>div:first-child {
     margin: 10px 5px;

@@ -11,9 +11,6 @@ export const UsersApi = {
     async apiGetUsers(page, pageSize) {
         return instance.get(`users?page=${page}&count=${pageSize}`).then(res => res.data)
     },
-    async apiGetUserInfo(userId) {
-        return instance.get(`profile/${userId}`).then(res => res.data)
-    },
     async apiOnFollow(id) {
         return instance.post(`follow/${id}`).then(res => res.data)
     },
@@ -22,8 +19,26 @@ export const UsersApi = {
     }
 }
 
+export const ProfileApi = {
+    async apiGetUserInfo(userId) {
+        return instance.get(`profile/${userId}`).then(res => res.data)
+    },
+    async apiGetStatus(userId) {
+        return instance.get(`profile/status/${userId}`).then(res => res.data)
+    },
+    async apiUpdateStatus(status) {
+        return instance.put(`profile/status/`, {status}).then(res => res.data)
+    }
+}
+
 export const AuthApi = {
     async apiAuthMe() {
         return instance.get('auth/me').then(res => res.data)
+    },
+    async login({email, password, rememberMe = false}) {
+        return instance.post('auth/login', {email, password, rememberMe}).then(res => res.data)
+    },
+    async logout() {
+        return instance.delete('auth/login').then(res => res.data)
     }
 }
