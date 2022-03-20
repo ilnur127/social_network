@@ -3,14 +3,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import { addPostThunk, getUserInfoThunkCreator, getStatusThunkCreator, updateStatusThunkCreator } from '../../redux/profileReducer'
+import { addPostThunk, getUserInfoThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, savePhotoThunkCreator } from '../../redux/profileReducer'
 import Profile from './Profile'
 import Loader from '../ui/Loader/Loader'
-import { withAuthRedirect } from '../../hoc/ThisAuthRedirect'
+import { withAuthRedirect } from '../../hoc/WithAuthRedirect'
 import { compose } from 'redux'
 
 class ProfileContainer extends React.Component {
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.match.params.userId || this.props.userId
         if (!userId) {
             this.props.history.push('/login')
@@ -18,12 +18,20 @@ class ProfileContainer extends React.Component {
         this.props.getUserInfo(userId)
         this.props.getUserStatus(userId)
     }
+    componentDidMount() {
+        this.refreshProfile()
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.match.params.userId != prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+    }
     render = () => (
         <>
             {!this.props.profile ?
                 <Loader />
             :
-                <Profile {...this.props}/>
+                <Profile {...this.props} isOwner={!this.props.match.params.userId}/>
             }
         </>
     )
@@ -43,7 +51,8 @@ export default compose(
         getUserInfo: getUserInfoThunkCreator,
         getUserStatus: getStatusThunkCreator,
         updateStatus: updateStatusThunkCreator,
-        addPost: addPostThunk
+        addPost: addPostThunk,
+        savePhoto: savePhotoThunkCreator
     }),
     withRouter,
     withAuthRedirect

@@ -1,4 +1,6 @@
 import React from "react";
+import { Field } from "redux-form";
+
 import classes from './FormsField.module.css'
 
 function FormControl({input, meta, ...props}) {
@@ -30,3 +32,17 @@ export function Input(props) {
         </FormControl>
     )
 }
+
+export const CreateField = (placeholder, name, validaters, component, props, title) => (
+    <div>
+        {props && props.type && props.type !== 'checkbox' ? <label>{title}</label> : null}
+        <Field
+            component={component}
+            name={name}
+            placeholder={placeholder}
+            validate={validaters}
+            {...props}
+        />
+        {props && props.type && props.type === 'checkbox' ?<label>{title}</label> : null}
+    </div>
+)

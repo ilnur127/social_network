@@ -1,10 +1,10 @@
 import classes from './DialogItem.module.css'
 import { NavLink } from 'react-router-dom'
 
-const DialogItem = (props) => {
+const DialogItem = ({userId, userName}) => {
     return <div className={classes.dialog}>
         <img src='/userLogo.png' className={classes.dialogImg}/>
-        <NavLink to={`/dialogs/${props.userId}`} activeClassName={classes.active}>{props.userName}</NavLink>
+        <NavLink to={`/dialogs/${userId}`} activeClassName={classes.active}>{userName}</NavLink>
     </div>
 }
 

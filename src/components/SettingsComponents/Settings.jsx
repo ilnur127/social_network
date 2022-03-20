@@ -1,7 +1,3 @@
-import classes from './Settings.module.css'
-
-const Settings = (props) => {
+export default function Settings() {
     return <div>Settings</div>
 }
-
-export default Settings

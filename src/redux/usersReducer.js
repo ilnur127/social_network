@@ -1,4 +1,5 @@
 import { UsersApi } from "../utils/api/api"
+import { updateObjectInArray } from "../utils/helpers/objectHelpers"
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -56,21 +57,21 @@ export const getUsersThunkCreator = (page, pageSize, changePage) => async (dispa
     dispatch(setUsersAC([...data.items]))
     dispatch(toggleIsFetchingAC(false))
 }
-export const onFolowThunkCreator = (id) => async (dispatch) => {
-    dispatch(toggleFollowingProgressAC({isFetching: true, userId: id}))
-    const data = await UsersApi.apiOnFollow(id)
+
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+    dispatch(toggleFollowingProgressAC({isFetching: true, userId}))
+    const data = await apiMethod(userId)
     if (data.resultCode === 0) {
-        dispatch(followAC(id))
+        dispatch(actionCreator(userId))
     }
-    dispatch(toggleFollowingProgressAC({isFetching: false, userId: id}))
+    dispatch(toggleFollowingProgressAC({isFetching: false, userId}))
+}
+
+export const onFolowThunkCreator = (id) => async (dispatch) => {
+    followUnfollowFlow(dispatch, id, UsersApi.apiOnFollow.bind(UsersApi), followAC)
 }
 export const onUnfolowThunkCreator = (id) => async (dispatch) => {
-    dispatch(toggleFollowingProgressAC({isFetching: true, userId: id}))
-    const data = await UsersApi.apiOnUnollow(id)
-    if (data.resultCode === 0) {
-        dispatch(unfollowAC(id))
-    }
-    dispatch(toggleFollowingProgressAC({isFetching: false, userId: id}))
+    followUnfollowFlow(dispatch, id,  UsersApi.apiOnUnollow.bind(UsersApi), unfollowAC)
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -78,23 +79,13 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW: {
             return {
                 ...state,
-                users : state.users.map((user) => {
-                    if (user.id === action.userId) {
-                        return { ...user, followed : true }
-                    }
-                    return user
-                })
+                users : updateObjectInArray(state.users, action.userId, "id", {followed : true})
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-                users : state.users.map((user) => {
-                    if (user.id === action.userId) {
-                        return { ...user, followed : false }
-                    }
-                    return user
-                })
+                users : updateObjectInArray(state.users, action.userId, "id", {followed : false})
             }
         }
         case SETUSERS: {

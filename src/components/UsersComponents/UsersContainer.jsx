@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
@@ -7,44 +8,32 @@ import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, get
 import Loader from "../ui/Loader/Loader";
 import Users from "./Users";
 
-class UsersComponent extends React.Component {
-    getUsers = async (page = null, changePage = false) => {
-        this.props.getUsers(page || this.props.currentPage, this.props.pageSize, changePage);
+function UsersComponent({currentPage, pageSize, getUsers, isFetching, totalUsersCount, users, onFolow, onUnfolow, followingInProgress}) {
+    const getUsersFunc = async (page = null, changePage = false) => {
+        getUsers(page || currentPage, pageSize, changePage);
     }
-    onPageChanged = (page) => {
+    const onPageChanged = (page) => {
         this.getUsers(page, true)
     }
-    componentDidMount() {
-        this.getUsers()
-    }
-    render = () => {
-        return (
-            <>
-                { this.props.isFetching ? 
-                    <Loader />
-                : <Users
-                    pagesCount={Math.ceil(this.props.totalUsersCount / this.props.pageSize)}
-                    users={this.props.users}
-                    currentPage={this.props.currentPage}
-                    onPageChanged={this.onPageChanged}
-                    onFollow={this.props.onFolow}
-                    onUnfollow={this.props.onUnfolow}
-                    followingInProgress={this.props.followingInProgress}
-                />
-                }
-            </>
-        )
-    }
+    useEffect(() => {getUsersFunc()}, [])
+    return (
+        <>
+            { isFetching ? 
+                <Loader />
+            : <Users
+                pagesCount={Math.ceil(totalUsersCount / pageSize)}
+                users={users}
+                currentPage={currentPage}
+                onPageChanged={onPageChanged}
+                onFollow={onFolow}
+                onUnfollow={onUnfolow}
+                followingInProgress={followingInProgress}
+            />
+            }
+        </>
+    )
 }
 
-// const mapStateToProps = (state) => ({
-//     users: state.usersPage.users,
-//     pageSize: state.usersPage.pageSize,
-//     totalUsersCount: state.usersPage.totalUsersCount,
-//     currentPage: state.usersPage.currentPage,
-//     isFetching: state.usersPage.isFetching,
-//     followingInProgress: state.usersPage.followingInProgress,
-// })
 const mapStateToProps = (state) => ({
     users: getUsers(state),
     pageSize: getPageSize(state),

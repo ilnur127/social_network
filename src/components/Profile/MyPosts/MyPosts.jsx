@@ -5,18 +5,18 @@ import NewPostReduxForm from './components/NewPostForm/NewPostForm'
 
 import classes from './MyPosts.module.css'
 
-const MyPosts = memo((props) => {
+const MyPosts = memo(({addPost, posts}) => {
     console.log("Render")
-    const addPost = (formData) => {
-        props.addPost(formData.newPostText)
+    const addPostFunc = (formData) => {
+        addPost(formData.newPostText)
     }
     return <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div className={classes.newPostBlock}>
-                <NewPostReduxForm onSubmit={addPost}/>
+                <NewPostReduxForm onSubmit={addPostFunc}/>
             </div>
             <div className="posts">
-                {props.posts.map((post) => (<Post key={post.id} messageId={post.id} messageText={post.text} likes={post.likes} />))}
+                {posts.map((post) => (<Post key={post.id} messageId={post.id} messageText={post.text} likes={post.likes} />))}
             </div>
         </div>
 })

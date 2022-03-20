@@ -1,9 +1,9 @@
 import classes from './Post.module.css'
-const Post = (props) => {
+const Post = ({messageText, likes}) => {
     return <div className={classes.item}>
         <img src="/UserLogo.png" alt="" />
-        <div>{props.messageText}</div>
-        <div>{props.likes} Likes</div>
+        <div>{messageText}</div>
+        <div>{likes} Likes</div>
         <button>Like</button>
     </div>
 }

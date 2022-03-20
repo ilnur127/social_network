@@ -1,13 +1,14 @@
 import MyPosts from './MyPosts/MyPosts'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
-const Profile = (props) => {
+
+const Profile = ({profile, status, updateStatus, posts, newPostText, updateNewPostText, addPost, savePhoto, isOwner}) => {
     return <div>
-        <ProfileInfo {...props.profile} status={props.status} updateStatus={props.updateStatus}/>
+        <ProfileInfo {...profile} status={status} updateStatus={updateStatus} savePhoto={savePhoto} isOwner={isOwner}/>
         <MyPosts
-            posts={props.posts}
-            newPostText={props.newPostText}
-            updateNewPostText={props.updateNewPostText}
-            addPost={props.addPost}
+            posts={posts}
+            newPostText={newPostText}
+            updateNewPostText={updateNewPostText}
+            addPost={addPost}
         />
     </div>
 }

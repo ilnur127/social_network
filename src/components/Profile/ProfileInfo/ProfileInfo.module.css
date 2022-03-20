@@ -2,9 +2,13 @@
 .contact {
     display: flex;
 }
-.info img,
+.info .avatarBlock img,
 .contact>div:first-child {
     margin-right: 10px;
+}
+.avatarBlock {
+    display: flex;
+    flex-direction: column;
 }
 .mainInfo>div:first-child {
     font-weight: bold;

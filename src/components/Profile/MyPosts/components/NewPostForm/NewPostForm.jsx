@@ -8,8 +8,7 @@ import classes from './NewPostForm.module.css';
 
 const maxLength10 = maxLengthCreator(10)
 
-function NewPostForm(props) {
-    const {handleSubmit} = props
+function NewPostForm({handleSubmit}) {
     return (
         <form onSubmit={handleSubmit}>
             <Field

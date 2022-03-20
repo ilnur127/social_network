@@ -8,8 +8,7 @@ import classes from './DialogForm.module.css'
 
 const maxLength50 = maxLengthCreator(50)
 
-function DialogForm(props) {
-    const {handleSubmit} = props
+function DialogForm({handleSubmit}) {
     return (
         <form onSubmit={handleSubmit}>
             <Field

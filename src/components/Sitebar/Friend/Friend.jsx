@@ -1,12 +1,12 @@
 import classes from './Friend.module.css'
 
-const Friend = (props) => {
+const Friend = ({friend}) => {
     return <div>
         <div>
             <img src='/userLogo.png' className={classes.friendImg}/>
         </div>
         <div className={classes.friendName}>
-            {props.friend.name}
+            {friend.name}
         </div>
     </div>
 }

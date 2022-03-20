@@ -2,7 +2,7 @@ import classes from './Sitebar.module.css'
 import { NavLink } from 'react-router-dom'
 import Friend from './Friend/Friend'
 
-const Sitebar = (props) => {
+const Sitebar = ({Sitebar}) => {
     return <nav className={classes.nav}>
         <div className={classes.item}>
             <NavLink to="/profile" activeClassName={classes.active}>Profile</NavLink>
@@ -25,7 +25,7 @@ const Sitebar = (props) => {
         <div className={classes.friendsBlock}>
             <div>Friends</div>
             <div className={classes.friends}>
-                {props.Sitebar.friends.map((friend) => <Friend key={friend.id} friend={friend}/>)}
+                {Sitebar.friends.map((friend) => <Friend key={friend.id} friend={friend}/>)}
             </div>
         </div>
     </nav>

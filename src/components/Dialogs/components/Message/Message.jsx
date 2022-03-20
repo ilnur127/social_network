@@ -1,8 +1,8 @@
 import classes from './Message.module.css'
-const Message = (props) => {
-    return <div className={`${classes.message} ${(props.message.meMessage === true) ? classes.meMessage : ''}`}>
+const Message = ({message}) => {
+    return <div className={`${classes.message} ${(message.meMessage === true) ? classes.meMessage : ''}`}>
         <img src="/userLogo.png" className={classes.messageImg}/>
-        <div className={classes.messageText}>{props.message.text}</div>
+        <div className={classes.messageText}>{message.text}</div>
     </div>
 }
 export default Message
