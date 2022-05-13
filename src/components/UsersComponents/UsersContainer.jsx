@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-import { getUsersThunkCreator, onFolowThunkCreator, onUnfolowThunkCreator } from '../../redux/usersReducer'
+import { getUsersThunkCreator, onFolowThunkCreator, onUnfolowThunkCreator } from '../../redux/usersReducer.ts'
 import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsers } from "../../redux/usersSelector";
 import Loader from "../ui/Loader/Loader";
 import Users from "./Users";

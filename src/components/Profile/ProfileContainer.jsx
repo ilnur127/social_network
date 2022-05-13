@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import { addPostThunk, getUserInfoThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, savePhotoThunkCreator } from '../../redux/profileReducer'
+import { addPostThunk, getUserInfoThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, savePhotoThunkCreator } from '../../redux/profileReducer.ts'
 import Profile from './Profile'
 import Loader from '../ui/Loader/Loader'
 import { withAuthRedirect } from '../../hoc/WithAuthRedirect'

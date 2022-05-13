@@ -4,13 +4,25 @@ import { AuthApi } from "../utils/api/api"
 const SET_USER_DATA = 'SET_USER_DATA'
 
 const initialState = {
-    userId: null,
-    email: null,
-    login: null,
+    userId: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false
 }
 
-const setAuthUserData = (userId, email, login, isAuth) => ({
+export type InitialStateType = typeof initialState
+
+type SetAuthUserDataActionDataType = {
+    userId:  number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+}
+type SetAuthUserDataActionType = {
+    type: typeof SET_USER_DATA,
+    data: SetAuthUserDataActionDataType
+}
+const setAuthUserData = (userId : number | null, email : string | null, login : string | null, isAuth : boolean) : SetAuthUserDataActionType => ({
     type: SET_USER_DATA,
     data: {
         userId,
@@ -20,7 +32,7 @@ const setAuthUserData = (userId, email, login, isAuth) => ({
     }
 })
 
-export const authUserThunk = () => async (dispatch) => {
+export const authUserThunk = () => async (dispatch : any) => {
     const data = await AuthApi.apiAuthMe()
     if (data.resultCode === 0) {
         const {id, email, login} = data.data
@@ -29,7 +41,7 @@ export const authUserThunk = () => async (dispatch) => {
     return data
 }
 
-export const loginThunkCreater = (formData) => async (dispatch) => {
+export const loginThunkCreater = (formData : any) => async (dispatch : any) => {
     const data = await AuthApi.login(formData)
     if (data.resultCode === 0) {
         dispatch(authUserThunk())
@@ -38,14 +50,14 @@ export const loginThunkCreater = (formData) => async (dispatch) => {
     }
 }
 
-export const logoutThunkCreater = () => async (dispatch) => {
+export const logoutThunkCreater = () => async (dispatch : any) => {
     const data = await AuthApi.logout()
     if (data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false))
     }
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action : any) : InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA: {
             return {

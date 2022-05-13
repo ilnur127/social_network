@@ -1,9 +1,9 @@
-import React, { Component, Suspense } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom'
 import { connect } from 'react-redux';
 import {Provider} from 'react-redux';
 
-import store from './redux/reduxStore.js'
+import store from './redux/reduxStore'
 import { initializeAppThunk } from './redux/appReduser';
 import HeaderContainer from './components/Header/HeaderContainer'
 import UsersContainer from './components/UsersComponents/UsersContainer';

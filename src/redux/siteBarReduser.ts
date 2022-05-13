@@ -1,3 +1,4 @@
+import { FriendType } from "../types/types"
 const initialState = {
     friends: [
         {
@@ -12,9 +13,10 @@ const initialState = {
             id: 1,
             name: 'Mansur'
         }
-    ]
+    ] as Array<FriendType>
 }
-const siteBarReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+const siteBarReducer = (state = initialState, action : any) : InitialStateType => {
     return state
 }
 

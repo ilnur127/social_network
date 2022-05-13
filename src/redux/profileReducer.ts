@@ -1,12 +1,14 @@
 import { ProfileApi } from "../utils/api/api"
-
+import { ProfileType, PostType, PhotosType } from "../types/types"
 const ADD_POST = 'ADD-POST'
 const DELETE_POST = 'DELETE_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const SET_PHOTO_SUCCESS = 'SET_PHOTO_SUCCESS'
+
+
 const initialState = {
-    profile: null,
+    profile: null as ProfileType | null,
     posts: [
         {
             id: 1,
@@ -18,46 +20,71 @@ const initialState = {
             text: 'I am Ilnur',
             likes: 20
         }
-    ],
+    ] as Array<PostType>,
     status: ''
 }
-export const addPostAC = (newText) => ({
+type InitialStateType = typeof initialState
+
+type AddPostACActionType = {
+    type: typeof ADD_POST,
+    newText : string
+}
+export const addPostAC = (newText : string) : AddPostACActionType => ({
     type : ADD_POST,
     newText
 })
-export const deletePostAC = (id) => ({
+
+type DeletePostACActionType = {
+    type: typeof DELETE_POST,
+    id : number
+}
+export const deletePostAC = (id : number) : DeletePostACActionType => ({
     type : DELETE_POST,
     id
 })
 
-export const setUserProfileAC = (profile) =>({
+type SetUserProfileACActionType = {
+    type: typeof SET_USER_PROFILE,
+    profile : ProfileType
+}
+export const setUserProfileAC = (profile: ProfileType) : SetUserProfileACActionType =>({
     type: SET_USER_PROFILE,
     profile
 })
-export const setStatusAC = (status) =>({
+
+type SetStatusACActionType = {
+    type: typeof SET_STATUS,
+    status : string
+}
+export const setStatusAC = (status: string) : SetStatusACActionType =>({
     type: SET_STATUS,
     status
 })
-export const setPhotoSuccessAC = (photos) =>({
+
+type SetPhotoSuccessACActionType = {
+    type: typeof SET_PHOTO_SUCCESS,
+    photos : PhotosType
+}
+export const setPhotoSuccessAC = (photos : PhotosType) : SetPhotoSuccessACActionType =>({
     type: SET_PHOTO_SUCCESS,
     photos
 })
 
-export const getUserInfoThunkCreator = (userId) => async (dispatch) => {
+export const getUserInfoThunkCreator = (userId : number) => async (dispatch : any) => {
     const data = await ProfileApi.apiGetUserInfo(userId)
     dispatch(setUserProfileAC(data))
 }
-export const getStatusThunkCreator = (userId) => async (dispatch) => {
+export const getStatusThunkCreator = (userId : number) => async (dispatch : any) => {
     const data = await ProfileApi.apiGetStatus(userId)
     dispatch(setStatusAC(data))
 }
-export const updateStatusThunkCreator = (status) => async (dispatch) => {
+export const updateStatusThunkCreator = (status : string) => async (dispatch : any) => {
     const data = await ProfileApi.apiUpdateStatus(status)
     if (data.resultCode === 0) {
         dispatch(setStatusAC(status))
     }
 }
-export const savePhotoThunkCreator = (file) => async (dispatch) => {
+export const savePhotoThunkCreator = (file : any) => async (dispatch : any) => {
     try {
         const data = await ProfileApi.savePhoto(file)
         if (data.resultCode === 0) {
@@ -68,20 +95,19 @@ export const savePhotoThunkCreator = (file) => async (dispatch) => {
         }
     } catch (error) {
         console.error(error)
-        alert(error.message)
     }
 }
 
-export const addPostThunk = (text) => async (dispatch) => {
+export const addPostThunk = (text : string) => async (dispatch : any) => {
     dispatch(addPostAC(text))
 }
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: any) : InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             return {...state,
                 posts : [...state.posts, {
-                    id: state.posts + 1,
+                    id: state.posts.length + 1,
                     text: action.newText,
                     likes: 0
                 }]
@@ -100,7 +126,7 @@ const profileReducer = (state = initialState, action) => {
             return {...state, status: action.status}
         }
         case SET_PHOTO_SUCCESS: {
-            return {...state, profile: {...state.profile, photos: action.photos}}
+            return {...state, profile: {...state.profile, photos: action.photos} as ProfileType}
         }
         default : {
             return state
